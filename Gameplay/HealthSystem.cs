@@ -6,7 +6,7 @@ namespace Gemserk.Leopotam.Ecs.Gameplay
 {
     public class HealthSystem : BaseSystem, IEcsRunSystem, IEntityCreatedHandler
     {
-        public void OnEntityCreated(World world, int entity)
+        public void OnEntityCreated(World world, Entity entity)
         {
             if (world.HasComponent<HealthComponent>(entity))
             {

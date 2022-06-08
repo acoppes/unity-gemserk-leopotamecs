@@ -5,7 +5,7 @@ namespace Gemserk.Leopotam.Ecs.Gameplay
 {
     public class AbilitiesSystem : BaseSystem, IEcsRunSystem, IEntityCreatedHandler
     {
-        public void OnEntityCreated(Gemserk.Leopotam.Ecs.World world, int entity)
+        public void OnEntityCreated(Gemserk.Leopotam.Ecs.World world, Entity entity)
         {
             if (world.HasComponent<AbilitiesComponent>(entity))
             {

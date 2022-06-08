@@ -10,7 +10,7 @@ namespace Gemserk.Leopotam.Ecs.Controllers
         readonly EcsFilterInject<Inc<StatesComponent>> statesFilter = default;
         readonly EcsPoolInject<StatesComponent> stateComponents = default;
 
-        public void OnEntityCreated(World world, int entity)
+        public void OnEntityCreated(World world, Entity entity)
         {
             if (stateComponents.Value.Has(entity))
             {
