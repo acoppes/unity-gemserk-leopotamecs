@@ -7,7 +7,7 @@ namespace Gemserk.Leopotam.Ecs.Controllers
     {
         public GameObject controllerObject;
     
-        public void Apply(World world, int entity)
+        public void Apply(World world, Entity entity)
         {
             world.AddComponent(entity, new ControllerComponent
             {

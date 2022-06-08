@@ -11,7 +11,7 @@ namespace Gemserk.Leopotam.Ecs.Gameplay
 
         public Ability.StartType startType;
 
-        public void Apply(World world, int entity)
+        public void Apply(World world, Entity entity)
         {
             ref var abilitiesComponent = ref world.GetComponent<AbilitiesComponent>(entity);
         
