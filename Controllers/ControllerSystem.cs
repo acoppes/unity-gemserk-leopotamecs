@@ -11,20 +11,41 @@ namespace Gemserk.Leopotam.Ecs.Controllers
 
         public void Run(EcsSystems systems)
         {
+            var configurations = world.GetComponents<ConfigurationComponent>();
+            
+            foreach (var entity in world.GetFilter<ControllerComponent>().Inc<ConfigurationComponent>().End())
+            {
+                ref var controllerComponent = ref controllerComponents.Value.Get(entity);
+                var configuration = configurations.Get(entity);
+
+                controllerComponent.onConfigurationPending =
+                    controllerComponent.configurationVersion != configuration.configuredVersion;
+                controllerComponent.configurationVersion = configuration.configuredVersion;
+            }
+
             foreach (var entity in controllerFilter.Value)
             {
                 ref var controllerComponent = ref controllerComponents.Value.Get(entity);
-
-                if (!controllerComponent.intialized)
-                {
-                    // controllerComponent.controller.OnInit(world, entity);
-                    controllerComponent.intialized = true;
-                }
-
+                
                 foreach (var controller in controllerComponent.controllers)
                 {
-                    controller.OnUpdate(Time.deltaTime, world, entity);    
+                    controller.Bind(world, entity);
+
+                    if (!controllerComponent.intialized && controller is IInit init)
+                    {
+                        init.OnInit();
+                    }
+
+                    if (controllerComponent.onConfigurationPending && controller is IConfigurable configurable)
+                    {
+                        configurable.OnConfigured();
+                    }
+                    
+                    controller.OnUpdate(Time.deltaTime);    
                 }
+                
+                controllerComponent.intialized = true;
+                controllerComponent.onConfigurationPending = false;
             }
         }
     }
